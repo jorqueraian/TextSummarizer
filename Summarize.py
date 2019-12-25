@@ -197,8 +197,8 @@ if __name__ == '__main__':
     # doc = Document(sample_text, 'pride and prejudice')
 
     # Find summary
-    # summary = doc.create_document_summary(percent_words=.07)
-    summary = doc.create_document_summary(num_words=200)
+    summary = doc.create_document_summary(percent_words=.005)
+    # summary = doc.create_document_summary(num_words=200)
 
     # Write out summary and print score
     w_file = open('output.txt', 'w+')
