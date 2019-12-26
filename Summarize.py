@@ -10,11 +10,6 @@ class Document(object):
                ['! ', '!"', '!\n', '!)'],  # exclamation sentences
                ['? ', '?"', '?\n', '?)'],  # Questions
                [' ', '-']]  # word endings. Node we don't need to consider punctuation as long as there is still a space
-    sentences = []
-    sentence_len = []
-    sentences_val = []
-    words = {}
-    total_words = 0
 
     def __init__(self, doc, title=None):
         """
@@ -22,6 +17,11 @@ class Document(object):
         :param doc: text
         :param title: optional title
         """
+        self.sentences = []
+        self.sentence_len = []
+        self.sentences_val = []
+        self.words = {}
+        self.total_words = 0
         # Covert document to unicode
         self.document = unidecode.unidecode(doc)
         # Replace all white space with just single spaces
@@ -32,7 +32,7 @@ class Document(object):
             self.title = title.lower().split(' ')
         else:
             self.title = []
-
+    
     @staticmethod
     def clean_word(w):
         return re.sub(r'[^\w]', '', w.strip().lower())
@@ -139,12 +139,12 @@ class Document(object):
         if percent_words == 0 and num_words == 0:
             return "Error: summary size not specified"
         # parse data to get points for each sentence
-        doc.parse_text()
+        self.parse_text()
         if percent_words != 0.0:
-            return doc.opt_summary(self.sentences, self.sentence_len, self.sentences_val,
+            return self.opt_summary(self.sentences, self.sentence_len, self.sentences_val,
                                    int(percent_words*self.total_words))
         else:
-            return doc.opt_summary(self.sentences, self.sentence_len, self.sentences_val, num_words)
+            return self.opt_summary(self.sentences, self.sentence_len, self.sentences_val, num_words)
 
     @staticmethod
     def opt_summary(sentence_arr, w_arr, v_arr, num_words):
@@ -180,27 +180,27 @@ class Document(object):
 
 
 if __name__ == '__main__':
-    # TODO: It would be nice to have a way to make thi script run more easily. Ex: Given url it extracts paragraph text
-    text_file = open('sample_text.txt', encoding="utf8")
+    pass
+    # I will leave these comments here as an example of the possible usage
+    # text_file = open('sample_text.txt', encoding="utf8")
     # text_file = open('prideandprejudice.txt', encoding="utf8")
     # text_file = open('test.txt', encoding="utf8")
 
     # Load text
-    sample_text = str(text_file.read())
+    # sample_text = str(text_file.read())
 
     # Remove unwanted text in the essay. ie '(fr)'
-    sample_text = sample_text.replace('(fr) ', '')
+    # sample_text = sample_text.replace('(fr) ', '')
 
     # Load document class
-    doc = Document(sample_text, 'Industrial Society and Its Future')
+    # doc = Document(sample_text, 'Industrial Society and Its Future')
     # doc = Document(sample_text, 'Boeing Can’t Fly Its 737 Max, but It’s Ready to Sell Its Safety')
     # doc = Document(sample_text, 'pride and prejudice')
 
     # Find summary
-    summary = doc.create_document_summary(percent_words=.005)
+    # summary = doc.create_document_summary(percent_words=.005)
     # summary = doc.create_document_summary(num_words=200)
 
     # Write out summary and print score
-    w_file = open('output.txt', 'w+')
-    w_file.write('.\n'.join(summary) + '.')
-    print('Summary saved')
+    # w_file = open('output.txt', 'w+')
+    # w_file.write('.\n'.join(summary) + '.')
