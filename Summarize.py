@@ -54,7 +54,7 @@ class Document(object):
             # our '.' case. normal sentence. watch for acronyms and cases like 'Mr.'
             if self.document[i:i+2] in self.endings[0]:
                 if (i > 2 and
-                    (self.document[i-2:i] == 'Mr' or self.document[i-2:i] == 'Dr' or self.document[i-2] == '.')) or \
+                    (self.document[i-2:i] == 'Mr' or self.document[i-2:i] == 'Dr' or self.document[i-2:i] == 'Ms' or self.document[i-2] == '.')) or \
                         (i > 3 and (self.document[i-3:i] == 'Mrs' or self.document[i-3:i].lower() == ' vs')):
                     continue  # if its not the end of a sentence. This wont always be true. but
                 sen_val = 0

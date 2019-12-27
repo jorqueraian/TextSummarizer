@@ -35,7 +35,7 @@ if __name__ == '__main__':
             # Find summary, that is twenty percent the size
             summaries = []
             for document in documents:
-                summaries.append(document.create_document_summary(percent_words=.2))
+                summaries.append(document.create_document_summary(percent_words=.15))
 
             # Create ew email body
             response_body = ''
