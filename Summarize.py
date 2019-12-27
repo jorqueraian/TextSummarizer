@@ -105,8 +105,8 @@ class Document(object):
         mean_squared = np.array([self.words[k]*self.words[k] for k in self.words]).mean()
         # For some reason this gave me slightly different values than np.std, probably just a rounding issue
         std = np.sqrt(mean_squared - mean)
-
         for word in self.words:
+            # Some Times this throws an error for no reason
             if self.words[word] < mean + std:
                 self.words[word] = max(0, int(char_mult * (len(word)-6))) + under_mean + per_word
             else:

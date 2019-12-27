@@ -3,8 +3,9 @@ from EmailBot import Emailer, body_from_website
 import time
 
 if __name__ == '__main__':
-    email_client = Emailer()
     while True:
+        # For some reason the client will sometimes close its self
+        email_client = Emailer()
         # Retrieve unseen emails with 'Summarize' in the subject. Returns IDs in space separated str form.
         emails = email_client.search()[0].decode()
 
@@ -18,18 +19,25 @@ if __name__ == '__main__':
         sender, subject, body = email_client.get_email_data(emails.split(' ')[0])
         print(f'Email received from: {sender}')
 
-        # Load document class with body text
-        if subject.lower() == 'summarize: url':
-            subj, text = body_from_website(str(body))
-            document = Document(text, subj)
-        else:
-            document = Document(str(body), subject.replace('Summarize: ', ''))
+        try:
+            # Load document class with body text
+            if subject.lower() == 'summarize: url':
+                subj, text = body_from_website(str(body))
+                document = Document(text, subj)
+            else:
+                document = Document(str(body), subject.replace('Summarize: ', ''))
 
-        # Find summary, that is twenty percent the size
-        summary = document.create_document_summary(percent_words=.2)
+            # Find summary, that is twenty percent the size
+            summary = document.create_document_summary(percent_words=.2)
 
-        sender = sender.split('<')[-1].split('>')[0]
-        email_client.send_email(sender, subject.replace('Summarize', 'Completed Summary'), '.\n'.join(summary))
-        # email_client.close()
-        print('Summary sent')
-        # time.sleep(2)
+            sender = sender.split('<')[-1].split('>')[0]
+            email_client.send_email(sender, subject.replace('Summarize', 'Completed Summary'), '.\n'.join(summary))
+            # email_client.close()
+            print('Summary sent')
+            # time.sleep(2)
+
+        except Exception as e:
+            # sender = sender.split('<')[-1].split('>')[0]
+            # email_client.send_email(sender, subject.replace('Summarize', 'ERROR'), 'Unexpected error')
+            print(f'Error: {e}')
+            time.sleep(2)
