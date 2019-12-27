@@ -1,5 +1,5 @@
 from Summarize import Document
-from EmailBot import Emailer
+from EmailBot import Emailer, body_from_website
 import time
 
 if __name__ == '__main__':
@@ -19,7 +19,11 @@ if __name__ == '__main__':
         print(f'Email received from: {sender}')
 
         # Load document class with body text
-        document = Document(str(body), subject.replace('Summarize: ', ''))
+        if subject.lower() == 'summarize: url':
+            subj, text = body_from_website(str(body))
+            document = Document(text, subj)
+        else:
+            document = Document(str(body), subject.replace('Summarize: ', ''))
 
         # Find summary, that is twenty percent the size
         summary = document.create_document_summary(percent_words=.2)

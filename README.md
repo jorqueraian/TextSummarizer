@@ -52,7 +52,8 @@ look at the example credential file for an example of the structure,
 the `SummarizerBot.py` should work. The emails sent to the bot account 
 should have the following subject: "Summarize: \<Title or description\>"
 and the body of the email should contain an article or essay in plain 
-text. Stories work but wont work well. I May or may not have a 
+text. Alternatively, the header can be "Summarize: URL" and the body 
+can be the url. Stories work but wont work well. I May or may not have a 
 bot running under the email `ijorquer7974@gmail.com` for anyone to test 
 it out. The bot will email back a summary that is 20% the original size
 of the article.

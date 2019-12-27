@@ -2,7 +2,9 @@ import unidecode
 import numpy as np
 import re
 
+
 stop_words = ["", " ", "\n", "i", "me", "my", "oh", 'mr', 'mrs', "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
+# states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 
 
 class Document(object):
@@ -183,7 +185,7 @@ if __name__ == '__main__':
     pass
     # I will leave these comments here as an example of the possible usage
     # text_file = open('sample_text.txt', encoding="utf8")
-    # text_file = open('prideandprejudice.txt', encoding="utf8")
+    # text_file = open('prideandprejudilce.txt', encoding="utf8")
     # text_file = open('test.txt', encoding="utf8")
 
     # Load text
@@ -193,12 +195,13 @@ if __name__ == '__main__':
     # sample_text = sample_text.replace('(fr) ', '')
 
     # Load document class
+    # doc = Document(text, headline)
     # doc = Document(sample_text, 'Industrial Society and Its Future')
     # doc = Document(sample_text, 'Boeing Can’t Fly Its 737 Max, but It’s Ready to Sell Its Safety')
     # doc = Document(sample_text, 'pride and prejudice')
 
     # Find summary
-    # summary = doc.create_document_summary(percent_words=.005)
+    # summary = doc.create_document_summary(percent_words=.1)
     # summary = doc.create_document_summary(num_words=200)
 
     # Write out summary and print score

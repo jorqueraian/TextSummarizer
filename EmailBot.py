@@ -2,9 +2,14 @@ import json
 import imaplib
 import smtplib
 import email
+import urllib.request
+from inscriptis import get_text
+import re
 from email.header import decode_header, make_header
 
 
+# For this to work this setting in gmail must be turned on
+# https://myaccount.google.com/lesssecureapps
 class Emailer(object):
     def __init__(self, login='email_login.json'):
         # Parse json
@@ -60,3 +65,24 @@ class Emailer(object):
 
     def close(self):
         self.client.close()
+
+
+def text_from_website(url):
+    html = urllib.request.urlopen(url).read().decode('utf-8')
+
+    return get_text(html)
+
+
+def body_from_website(url):
+    f = urllib.request.urlopen(url).read().decode('utf-8')
+    title_split = re.split('<title[^>]*>|<\/title[^>]*>', f)
+    texts = re.split('<p>|</p>', f)
+
+    title = ''
+    if len(title_split) > 1:
+        title = title_split[1]
+
+    ps = ''
+    for i in range(1, len(texts), 2):
+        ps += get_text(texts[i])
+    return title, ps
