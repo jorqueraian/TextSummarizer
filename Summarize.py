@@ -30,6 +30,7 @@ class Document(object):
         self.document = re.sub(r'[ \t\n\r]+', ' ', self.document)
 
         # If a title is provided we want to parse that for better results
+        self.subject = str(title)
         if title is not None:
             self.title = title.lower().split(' ')
         else:
@@ -106,8 +107,7 @@ class Document(object):
         # For some reason this gave me slightly different values than np.std, probably just a rounding issue
         std = np.sqrt(mean_squared - mean)
         for word in self.words:
-            # Some Times this throws an error for no reason
-            if self.words[word] < mean + std:
+            if self.words[word] < mean + std or std == 0.0:
                 self.words[word] = max(0, int(char_mult * (len(word)-6))) + under_mean + per_word
             else:
                 self.words[word] = int(std_mult * ((self.words[word] - mean)/std)) + \

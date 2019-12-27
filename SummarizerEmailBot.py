@@ -1,6 +1,7 @@
 from Summarize import Document
 from EmailBot import Emailer, body_from_website
 import time
+import re
 
 if __name__ == '__main__':
     while True:
@@ -20,19 +21,35 @@ if __name__ == '__main__':
         print(f'Email received from: {sender}')
 
         try:
+            documents = []
             # Load document class with body text
             if subject.lower() == 'summarize: url':
-                subj, text = body_from_website(str(body))
-                document = Document(text, subj)
+                for url in re.split(r'[ \t\n\r]+', str(body)):
+                    if url != '':
+                        subj, text = body_from_website(url.lower())
+                        if text != '':
+                            documents.append(Document(text, subj))
             else:
-                document = Document(str(body), subject.replace('Summarize: ', ''))
+                documents.append(Document(str(body), subject.replace('Summarize: ', '')))
 
             # Find summary, that is twenty percent the size
-            summary = document.create_document_summary(percent_words=.2)
+            summaries = []
+            for document in documents:
+                summaries.append(document.create_document_summary(percent_words=.2))
+
+            # Create ew email body
+            response_body = ''
+            for i in range(len(documents)):
+                response_body += 'Title: ' + documents[i].subject
+                response_body += '\n\n'
+                if len(summaries[i]) != 0:
+                    response_body += '.\n'.join(summaries[i])
+                else:
+                    response_body += 'Text Too Short'
+                response_body += '\n\n--------------\n\n'
 
             sender = sender.split('<')[-1].split('>')[0]
-            email_client.send_email(sender, subject.replace('Summarize', 'Completed Summary'), '.\n'.join(summary))
-            # email_client.close()
+            email_client.send_email(sender, subject.replace('Summarize', 'Completed Summary'), response_body)
             print('Summary sent')
             # time.sleep(2)
 

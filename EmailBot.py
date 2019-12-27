@@ -74,15 +74,19 @@ def text_from_website(url):
 
 
 def body_from_website(url):
-    f = urllib.request.urlopen(url).read().decode('utf-8')
-    title_split = re.split('<title[^>]*>|<\/title[^>]*>', f)
-    texts = re.split('<p>|</p>', f)
+    try:
+        f = urllib.request.urlopen(url).read().decode('utf-8')
+        title_split = re.split('<title[^>]*>|<\/title[^>]*>', f)
+        texts = re.split('<p [^>]*>|</p>', f)
 
-    title = ''
-    if len(title_split) > 1:
-        title = title_split[1]
+        title = ''
+        if len(title_split) > 1:
+            title = title_split[1]
 
-    ps = ''
-    for i in range(1, len(texts), 2):
-        ps += get_text(texts[i])
-    return title, ps
+        ps = ''
+        for i in range(1, len(texts), 2):
+            ps += get_text(texts[i])
+        return title, ps
+    except:
+        # This isnt an amazing way to do this but, this will check if the link it correct
+        return '', ''
