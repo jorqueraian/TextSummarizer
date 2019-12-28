@@ -15,7 +15,7 @@ class Emailer(object):
         # Parse json
         with open(login) as f:
             data = json.load(f)
-        # Create imao client
+        # Create imap client
         self.client = imaplib.IMAP4_SSL(data['server'])
         self.client.login(data['username'], data['passwd'])
 

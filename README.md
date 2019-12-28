@@ -57,3 +57,16 @@ should be the url or urls if multiple. Stories work but wont work well. I May or
 bot running under the email `ijorquer7974@gmail.com` for anyone to test 
 it out. The bot will email back a summary that is 20% the original size
 of the article.
+
+## Desktop Application
+To compile a desktop application run the following 
+command, in the command line,
+```
+pyinstaller --onefile --hidden-import inscriptis SummarizerApplication.py
+```
+From here either drag over the desired file to summarize. 
+Or copy the desired link, or text, and run the application, and 
+the executable will automatically use the copied data from 
+the clipboard. It is important to note that coping text 
+directly can be prone to many different issues and isn't 
+recommended.
