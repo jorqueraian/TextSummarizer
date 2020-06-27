@@ -12,6 +12,7 @@ def home():
 
 @app.route('/api/summarizetext', methods=['GET'])
 def api_summarize_text():
+    headline = ""
     if 'text' in request.args:
         text = str(request.args['text'])
     else:
@@ -19,8 +20,6 @@ def api_summarize_text():
 
     if 'headline' in request.args:
         headline = str(request.args['headline'])
-    else:
-        return "Error: No headline provided. Please specify a headline."
 
     # Create an empty list for our results
     doc = Summarize.Document(text, headline)
