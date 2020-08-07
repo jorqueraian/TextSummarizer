@@ -1,4 +1,4 @@
-from Summarize import Document
+from summarize import Summarizer
 from EmailBot import Emailer, body_from_website
 import time
 import re
@@ -28,22 +28,22 @@ if __name__ == '__main__':
                     if url != '':
                         subj, text = body_from_website(url.lower())
                         if text != '':
-                            documents.append(Document(text, subj))
+                            documents.append(Summarizer(text))
             else:
-                documents.append(Document(str(body), subject.replace('Summarize: ', '')))
+                documents.append(Summarizer(str(body)))
 
             # Find summary, that is twenty percent the size
             summaries = []
             for document in documents:
-                summaries.append(document.create_document_summary(percent_words=.15))
+                summaries.append(document.get_optimal_subset_by_percent_words(.15, ret_as='str'))
 
             # Create ew email body
             response_body = ''
             for i in range(len(documents)):
-                response_body += 'Title: ' + documents[i].subject
+                response_body += 'Title: ' + subject
                 response_body += '\n\n'
                 if len(summaries[i]) != 0:
-                    response_body += '.\n'.join(summaries[i])
+                    response_body += summaries[i]
                 else:
                     response_body += 'Text Too Short'
                 response_body += '\n\n--------------\n\n'

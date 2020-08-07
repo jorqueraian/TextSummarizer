@@ -1,4 +1,4 @@
-from Summarize import Document
+from summarize import Summarizer
 from EmailBot import body_from_website
 import sys
 import os
@@ -28,15 +28,15 @@ if __name__ == '__main__':
         else:
             print(f'Loading text from: {copied_text}')
 
-    document = Document(text, subj)
+    document = Summarizer(text)
 
-    summary = document.create_document_summary(percent_words=.15)
+    summary = document.get_optimal_subset_by_percent_words(.15, ret_as='str')
 
     # Generate response
 
-    response_body = 'Title: ' + document.subject + '\n\n'
+    response_body = 'Title: ' + subj + '\n\n'
     if len(summary) != 0:
-        response_body += '.\n'.join(summary)
+        response_body += summary
     else:
         response_body += 'Text Too Short'
     response_body += '\n\n--------------\n\n'

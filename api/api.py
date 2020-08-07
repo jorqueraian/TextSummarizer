@@ -1,7 +1,7 @@
 import flask
 from flask import request, jsonify
 
-import Summarize
+from scripts.summarize import Summarizer
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -9,6 +9,7 @@ app.config["DEBUG"] = True
 @app.route('/', methods=['GET'])
 def home():
     return "<h1>Text Summarizer</h1><p>This site is a prototype API</p>"
+
 
 @app.route('/api/summarizetext', methods=['GET'])
 def api_summarize_text():
@@ -22,9 +23,10 @@ def api_summarize_text():
         headline = str(request.args['headline'])
 
     # Create an empty list for our results
-    doc = Summarize.Document(text, headline)
-    summary = doc.create_document_summary(percent_words=.1)
+    summarizer = Summarizer(text, headline)
+    _, summary = summarizer.get_optimal_subset_by_percent_words(.1, ret_as='str')
 
-    return '.\n'.join(summary) + '.'
+    return summary
+
 
 app.run()
