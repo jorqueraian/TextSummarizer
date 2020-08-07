@@ -43,7 +43,7 @@ def recover_solution_default(k, w):
     return solution[::-1]
 
 
-def alternate_knapsack(w, v):
+def alternative_knapsack(w, v):
     # Must assume all values of v > 0 and values of w are < max_weight
     w = [None] + w  # Make the first element None
     v = [None] + v  # Make the first element None
@@ -59,7 +59,7 @@ def alternate_knapsack(w, v):
     return M
 
 
-def recover_solution_alternate(M, w, v, max_weight):
+def recover_solution_alternative(M, w, v, max_weight):
     i = M.shape[0] - 1
     V = M.shape[1] - 1
     while M[i, V] > max_weight:
@@ -78,34 +78,17 @@ def recover_solution_alternate(M, w, v, max_weight):
     return solution[::-1]
 
 
-# Combines both the table creation and the backtracking
-def knapsack_solution2(w, v, max_weight):
-    return recover_solution_alternate(alternate_knapsack(w, v), w, v, max_weight)
-
-
-def greedy_approx(w, v, max_weight):
-    ratio = [(i, v[i]/w[i]) for i in range(len(v))]
-    ratio.sort(reverse=True, key=lambda t: t[1])
-
-    total_w = 0
-    sol = []
-
-    for i in range(len(ratio)):
-        ind = ratio[i][0]
-        if w[ind] + total_w <= max_weight:
-            sol.append(ind)
-            total_w += w[ind]
-    return sol
-
-
-def knapsack_approx(w, v, max_weight, eps):
+def knapsack_approx(w, v, max_weight,  eps):
     b = eps/(2*len(w)) * max(v)
     v_p = [int(v[i]/b) for i in range(len(v))]
-    return recover_solution_alternate(alternate_knapsack(w, v_p), w, v_p, max_weight)
+    return recover_solution_alternative(alternative_knapsack(w, v_p), w, v_p, max_weight)
 
 
-# TODO: add function that can automatically pick an option to use. for now we will use default
 def knapsack(w, v, max_weight):
-    subset = recover_solution_default(default_knapsack(w, v, max_weight), w)
+    if sum(v) < max_weight:
+        subset = recover_solution_alternative(alternative_knapsack(w, v), w, v, max_weight)
+    else:
+        subset = recover_solution_default(default_knapsack(w, v, max_weight), w)
     opt_val = sum([v[i] for i in subset])
     return opt_val, subset
+

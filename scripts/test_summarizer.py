@@ -32,8 +32,8 @@ class TestSummarizer(TestCase):
             # Load document class
             summarizer = Summarizer(text=sample_text)
 
-            # Find summary with 10% words
-            val, summary = summarizer.get_optimal_subset_by_percent_words(.005, ret_as="str")
+            # Find summary with 25% words
+            val, summary = summarizer.get_optimal_subset_by_percent_words(.25, ret_as="str")
 
             # Write out summary
             with open('output.txt', 'w+') as w_file:
@@ -51,8 +51,8 @@ class TestSummarizer(TestCase):
             # Load document class
             summarizer = Summarizer(text=sample_text)
 
-            # Find summary with 10% words
-            val, summary = summarizer.get_optimal_subset(300, ret_as="str")
+            # get summary
+            val, summary = summarizer.get_optimal_subset(2500, ret_as="str")
 
             # Write out summary
             with open('output.txt', 'w+') as w_file:

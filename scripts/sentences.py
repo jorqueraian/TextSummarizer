@@ -88,8 +88,8 @@ def parse_sentences(text, ret_type=str):
         text = text.replace(".\"", "\".")
     if "!" in text:
         text = text.replace("!\"", "\"!")
-    if "?" in text:
-        text = text.replace("?\"", "\"?")
+    if ")" in text:
+        text = text.replace(".)", ").")
     text = text.replace(".", ".<stop>")
     text = text.replace("?", "?<stop>")
     text = text.replace("!", "!<stop>")

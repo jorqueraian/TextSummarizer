@@ -116,10 +116,10 @@ class Summarizer:
         list of string respectively.
         :return:
         """
-        weigths = [s.weight for s in self.__sentences]
-        valuess = [s.value for s in self.__sentences]
+        weights = [s.weight for s in self.__sentences]
+        values = [s.value for s in self.__sentences]
 
-        opt_val, opt_subset = knapsack(weigths, valuess, max_num_words)
+        opt_val, opt_subset = knapsack(weights, values, max_num_words)
         if ret_as == "str":
             sentences = "\n".join([self.__sentences[i].text for i in opt_subset])
         elif ret_as == "list_str":
@@ -131,4 +131,3 @@ class Summarizer:
 
     def get_optimal_subset_by_percent_words(self, percent_of_words, ret_as=None):
         return self.get_optimal_subset(int(percent_of_words * self._total_words), ret_as)
-
