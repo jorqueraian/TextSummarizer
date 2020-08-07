@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     document = Summarizer(text)
 
-    summary = document.get_optimal_subset_by_percent_words(.15, ret_as='str')
+    _, summary = document.get_optimal_subset_by_percent_words(.15, ret_as='str')
 
     # Generate response
 

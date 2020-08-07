@@ -34,9 +34,9 @@ summarizer = Summarizer(sample_text)
 
 ```
 Once loaded we can generate a summary that is 0.5% the original size. `ret_as='str'` tells the summarizer to return the
-result as a single string
+result as a single string. Note that this next function returns both the optimal value and the optimal subset.
 ```python
-summary = summarizer.get_optimal_subset_by_percent_words(.005, ret_as='str')
+_, summary = summarizer.get_optimal_subset_by_percent_words(.005, ret_as='str')
 ```
 Because the original essay is around 34,000 words our summary is still fairly long so I have include only the first 7
 sentence below.
